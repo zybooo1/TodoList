@@ -5,4 +5,4 @@
 <img src="QRcode.jpg"/>
 
 #### 截图
-<img src="screen1.jpg" width="300" height="650" /> <img src="screen2.jpg" width="300" height="650" />
+<kbd><img src="screen1.jpg" width="300" height="650" /></kbd>  <kbd><img src="screen2.jpg" width="300" height="650" /></kbd>
