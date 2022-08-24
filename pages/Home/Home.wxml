@@ -1,0 +1,58 @@
+<view class="container">
+  <view class="top_container">
+    <view class="input_container">
+      <input class="input" maxlength="50" value="{{inputValue}}" bindconfirm="tapGo" bindinput="onInput" type="text" confirm-type="done" placeholder="输入待办..." />
+      <image class="ic_go" bindtap="tapGo" src="../../image/ic_go.png" />
+    </view>
+    <view class="colors_container">
+      <view class="item_color" wx:for="{{defaultColors}}" wx:key="index" style="{{'background-color:'+item}}" bindtap="tapColor" data-index='{{index}}'>
+        <image wx:if="{{currentCheckedColor == index}}" class="item_color_check" src="../../image/ic_check.png" />
+      </view>
+    </view>
+  </view>
+  <view class="list_container">
+    <view class="todo_list_container">
+      <view class="todo_item_container" wx:for="{{todos}}" wx:key="index" wx:if="{{!item.isDone}}">
+        <view class="todo_item_top">
+          <view class="todo_item_rect" style="{{'background-color:'+item.color}}"></view>
+          <view class="todo_item_check_container" bindtap="tapRadio" data-done='{{true}}' data-id='{{item.id}}'>
+            <view class="todo_item_check" style="{{'border-color:'+item.color}}"></view>
+          </view>
+          <view class="todo_item_content" bindtap="tapTodoItem" data-item="{{item}}">{{item.content}}</view>
+        </view>
+        <!-- <view class="line"></view> -->
+      </view>
+    </view>
+    <view class="divider_container">
+      <view class="divider_text_container" bindtap="tapSwitchDoneList">
+        <image class="divider_ic" src="{{isShowDoneList?'../../image/ic_arrow.png':'../../image/ic_arrow_up.png'}}" />
+        <view class="divider_text">{{isShowDoneList?'隐藏已完成待办':'显示已完成待办'}}</view>
+      </view>
+    </view>
+    <view wx:if="{{isShowDoneList}}" class="todo_list_container" style="padding: 10px 0 50px 0;">
+      <view class="todo_item_container" wx:for="{{todos}}" wx:key="index" wx:if="{{item.isDone}}">
+        <view class="todo_item_top">
+          <image class="ic_done" bindtap="tapRadio" data-done='{{false}}' data-id='{{item.id}}' src="../../image/ic_done.png" />
+          <view class="todo_item_content content_done" bindtap="tapTodoItem" data-item="{{item}}">{{item.content}}</view>
+        </view>
+        <!-- <view class="line"></view> -->
+      </view>
+    </view>
+  </view>
+
+  <view bindtap="onDialogClose" class="col-center" wx:if="{{dialogShow}}">
+    <view class="dialog_container" catchtap="catchtap">
+      <textarea class="dialog_input" value="{{currentTapTodo.content}}" maxlength="50" bindinput="onDialogInput" auto-height auto-focus cursor-spacing="180" disabled="{{currentTapTodo.isDone}}" style="{{currentTapTodo.isDone?'color:#999999':''}}" />
+      <view class="colors_container" wx:if="{{!currentTapTodo.isDone}}">
+        <view class="item_color" wx:for="{{defaultColors}}" wx:key="index" style="{{'background-color:'+item}}" bindtap="tapDialogColor" data-index='{{index}}'>
+          <image wx:if="{{currentDialogCheckedColor == index}}" class="item_color_check" src="../../image/ic_check.png" />
+        </view>
+      </view>
+      <view class="dialog_bottom_container">
+        <button bindtap="tapDialogDelete" style="color: #999999;border-color: #999999" plain="true" size="mini">删除</button>
+        <view style="flex: 1;"></view>
+        <button bindtap="tapDialogSave" wx:if="{{!currentTapTodo.isDone}}" style="background-color: #FF8126;color: #FFFFFF" size="mini">保存</button>
+      </view>
+    </view>
+  </view>
+</view>
